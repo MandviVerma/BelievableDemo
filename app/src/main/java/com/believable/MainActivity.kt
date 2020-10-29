@@ -13,25 +13,20 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
     internal var prevMenuItem: MenuItem? = null
-    lateinit var viewPager: ViewPager
 
-    lateinit var drawerLayout: DrawerLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initView()
+        openHomeFragment()
+        supportActionBar?.hide()
 
-        onClick()
         menu_bottom.setItemSelected(R.id.home)
         menu_bottom.setOnItemSelectedListener {
             when (it) {
 
                 R.id.home -> {
-                    val homeFragment = HomeFragment()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, homeFragment).commit()
-                    supportActionBar?.hide()
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                  openHomeFragment()
                 }
                 R.id.cart -> {
                     val cartFragment = CartFragment()
@@ -49,36 +44,17 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        initViewPager()
 
     }
 
-
-    private fun initViewPager() {
-        TODO("Not yet implemented")
+    private fun openHomeFragment() {
+        val homeFragment = HomeFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, homeFragment).commit()
     }
 
-    private fun initView() {
-        drawerLayout = findViewById(R.id.drawerLayout)
-        val actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer)
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setHomeButtonEnabled(true)
-    }
 
-    private fun onClick() {
-        iv_home.setOnClickListener {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START)
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START)
-            }
-        }
-        ivCancel.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
 
-    }
+
+
 }

@@ -4,7 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary">
+        <ImageView
+            android:id="@+id/ivArrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <TextView
+            android:id="@+id/tvItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Payment"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/tvSelectPayment"
         android:layout_width="wrap_content"
@@ -13,14 +43,16 @@
         android:layout_marginTop="20dp"
         android:text="Select your payment method"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
         app:layout_constraintBottom_toTopOf="@id/llPayNow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSelectPayment">
@@ -28,7 +60,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clCredit"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="100dp"
             android:layout_margin="10dp"
             android:background="@drawable/card"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,10 +68,10 @@
 
             <ImageView
                 android:id="@+id/ivCredit"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/check"
+                android:src="@drawable/credit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,10 +109,10 @@
 
             <ImageView
                 android:id="@+id/ivUpi"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/check"
+                android:src="@drawable/upi"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -118,10 +150,10 @@
 
             <ImageView
                 android:id="@+id/ivPayTM"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/check"
+                android:src="@drawable/paytm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -161,10 +193,10 @@
 
             <ImageView
                 android:id="@+id/ivGP"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/check"
+                android:src="@drawable/googlepay"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -203,10 +235,10 @@
 
             <ImageView
                 android:id="@+id/ivCOD"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_margin="8dp"
-                android:src="@drawable/check"
+                android:src="@drawable/cod"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -275,11 +307,12 @@
 
         <Button
             android:id="@+id/btnCheckOut"
-            android:layout_width="200dp"
+            android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_margin="16dp"
             android:background="@drawable/btn_white"
-            android:text="Pay now"
+            android:text="Pay Now"
+            android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

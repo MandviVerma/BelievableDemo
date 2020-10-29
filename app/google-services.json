@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "643539741549",
+    "firebase_url": "https://believabledemo.firebaseio.com",
+    "project_id": "believabledemo",
+    "storage_bucket": "believabledemo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643539741549:android:3e4f5959086f96237f0864",
+        "android_client_info": {
+          "package_name": "com.believable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643539741549-0h3e1b0jva9jkvbe9gdu003v9o3lmlv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.believable",
+            "certificate_hash": "c2acace08bb46a349b14c55774fbbb8773fa34da"
+          }
+        },
+        {
+          "client_id": "643539741549-gaqddr9e81h35kc8p9h4heaesq2p6be4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeT4PUY9FWhjfdm1BR-MQIghJVLbiwWpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643539741549-gaqddr9e81h35kc8p9h4heaesq2p6be4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
