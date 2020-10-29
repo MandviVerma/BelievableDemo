@@ -38,8 +38,8 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
         onClick()
 
         val list = mutableListOf<Int>()
-        list.add(R.drawable.ic_food1)
-        list.add(R.drawable.ic_food2)
+        list.add(R.drawable.food1)
+        list.add(R.drawable.food2)
         list.add(R.drawable.food3)
         adapters = Adapters(context)
         adapters.setContentList(list)
@@ -98,18 +98,19 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
                         }
                         newArrivalAdapter.notifyDataSetChanged()
 
-                    } else if (it.key == "BudgetFriendly") {
-                        it.children.forEach { details ->
-                            newArrivalList.add(
-                                HomeCategoryModel.Data.Category.GroceryDetails(
-                                    details.child("img").value.toString(),
-                                    details.child("item").value.toString(),
-                                    details.child("price").value.toString()
-                                )
-                            )
-                        }
-                        newArrivalAdapter.notifyDataSetChanged()
                     }
+//                    else if (it.key == "BudgetFriendly") {
+//                        it.children.forEach { details ->
+//                            newArrivalList.add(
+//                                HomeCategoryModel.Data.Category.GroceryDetails(
+//                                    details.child("img").value.toString(),
+//                                    details.child("item").value.toString(),
+//                                    details.child("price").value.toString()
+//                                )
+//                            )
+//                        }
+//                        newArrivalAdapter.notifyDataSetChanged()
+//                    }
 
                 }
             }
@@ -195,6 +196,7 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
 
     override fun onItemClick(position: Int, view: View) {
         val intent = Intent(context, CategoryActivity::class.java)
+        intent.putExtra("CategoryName", categoryList[position].name)
         intent.putParcelableArrayListExtra("Data", categoryList[position].list)
         startActivity(intent)
     }

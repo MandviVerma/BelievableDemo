@@ -10,15 +10,17 @@ import kotlinx.android.synthetic.main.activity_category.*
 class CategoryActivity : AppCompatActivity(), CategoryAdapter.OnItemClickListener {
     lateinit var categoryAdapter: CategoryAdapter
     var categoryList: ArrayList<HomeCategoryModel.Data.Category.GroceryDetails> = ArrayList()
+    var name = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-//        ivArrow.setOnClickListener {
-//            super.onBackPressed()
-//        }
-        categoryList.addAll(intent.getParcelableArrayListExtra("Data") ?: categoryList)
         setContentView(R.layout.activity_category)
+
+        name= intent.getStringExtra("CategoryName")?:""
+        categoryList.addAll(intent.getParcelableArrayListExtra("Data") ?: categoryList)
+
         intRecView()
+        tvItem.text=name
 
     }
 
@@ -36,12 +38,13 @@ class CategoryActivity : AppCompatActivity(), CategoryAdapter.OnItemClickListene
             this,
             ItemsOfCategory::class.java
         )
-
         startActivity(intent)
     }
 
     override fun onAddCart(position: Int, it: View?) {
-
+        categoryList[position].qty += 1
+        CartFragment.cartList.add(categoryList[position])
+        categoryAdapter.notifyDataSetChanged()
     }
 
 }

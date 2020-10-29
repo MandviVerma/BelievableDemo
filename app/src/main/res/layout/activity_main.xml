@@ -9,9 +9,8 @@
         android:id="@+id/menu_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="4dp"
         android:background="@color/colorPrimary"
-        android:elevation="8dp"
-        android:padding="16dp"
         app:cnb_menuResource="@menu/menu_bottom_navigation"
         app:layout_constraintBottom_toBottomOf="parent" />
 
