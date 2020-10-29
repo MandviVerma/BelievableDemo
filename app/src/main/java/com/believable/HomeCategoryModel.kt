@@ -18,7 +18,8 @@ data class HomeCategoryModel(
             data class GroceryDetails(
                 val img: String="",
                 val item: String="",
-                val price: String=""):Parcelable
+                val price: String="",
+                var qty :Int = 0):Parcelable
         }
     }
 }

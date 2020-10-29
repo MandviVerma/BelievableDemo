@@ -41,9 +41,7 @@ class CategoryActivity : AppCompatActivity(), CategoryAdapter.OnItemClickListene
     }
 
     override fun onAddCart(position: Int, it: View?) {
-        val cartFragment = CartFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout, cartFragment).commit()
+
     }
 
 }

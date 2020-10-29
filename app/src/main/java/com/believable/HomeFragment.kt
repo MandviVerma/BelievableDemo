@@ -1,6 +1,5 @@
 package com.believable
 
-import android.app.ActionBar
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -13,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.believable.CartFragment.Companion.cartList
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -22,16 +22,13 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
     CategoryAdapter.OnItemClickListener {
+
     lateinit var categoryAdapter: HomeCategoryAdapter
     lateinit var newArrivalAdapter: CategoryAdapter
     lateinit var adapters: Adapters
-
     val newArrivalList = ArrayList<HomeCategoryModel.Data.Category.GroceryDetails>()
-
-
     val categoryList = ArrayList<HomeCategoryModel.Data.Category>()
     lateinit var productsDR: DatabaseReference
-    lateinit var ab: ActionBar
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -39,16 +36,15 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
         getPrducts()
         initView()
         onClick()
-        var list = mutableListOf<Int>()
+
+        val list = mutableListOf<Int>()
         list.add(R.drawable.ic_food1)
         list.add(R.drawable.ic_food2)
         list.add(R.drawable.food3)
-
-
-
         adapters = Adapters(context)
         adapters.setContentList(list)
         viewpager.adapter=adapters
+
         categoryAdapter = HomeCategoryAdapter(context, categoryList, this)
         newArrivalAdapter = CategoryAdapter(context, newArrivalList, this)
 
@@ -62,8 +58,7 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
     private fun getPrducts() {
         productsDR.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(context, "Database error :" + p0.toString(), Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(context, "Database error :" + p0.toString(), Toast.LENGTH_SHORT).show()
             }
 
             override fun onDataChange(snapShot: DataSnapshot) {
@@ -73,7 +68,7 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
                     if (it.key == "Categories") {
                         it.children.forEach { category ->
                             val list = ArrayList<HomeCategoryModel.Data.Category.GroceryDetails>()
-                            category.children.forEach { details ->
+                            category.child("list").children.forEach { details ->
                                 list.add(
                                     HomeCategoryModel.Data.Category.GroceryDetails(
                                         details.child("img").value.toString(),
@@ -114,7 +109,6 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
                             )
                         }
                         newArrivalAdapter.notifyDataSetChanged()
-
                     }
 
                 }
@@ -123,31 +117,19 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
         })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_home, container, false)
-
-        return view
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
 
     private fun initView() {
 
         val actionBarDrawerToggle =
-            ActionBarDrawerToggle(
-                context as Activity?,
-                drawerLayout,
-                R.string.open_drawer,
-                R.string.close_drawer
-            )
+            ActionBarDrawerToggle(context as Activity?,
+                drawerLayout, R.string.open_drawer, R.string.close_drawer)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
         activity?.setActionBar(toolbar)
-        //activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
-        //activity?.actionBar?.setHomeButtonEnabled(true)
     }
 
     private fun onClick() {
@@ -158,22 +140,23 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
                 drawerLayout.openDrawer(GravityCompat.START)
             }
         }
+
         ivCancel.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
-        tvCategories.setOnClickListener {
 
+        tvCategories.setOnClickListener {
             rvHomeCategory.apply {
                 adapter = categoryAdapter
                 layoutManager = GridLayoutManager(context, 2)
             }
             categoryAdapter.notifyDataSetChanged()
 
-            tvCategories.setBackgroundResource(R.drawable.btn_green);
+            tvCategories.setBackgroundResource(R.drawable.btn_green)
             tvCategories.setTextColor(Color.parseColor("#ffffff"))
-            tvNewArrival.setBackgroundResource(R.drawable.btn_white);
+            tvNewArrival.setBackgroundResource(R.drawable.btn_white)
             tvNewArrival.setTextColor(Color.parseColor("#6fae07"))
-            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_white);
+            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_white)
             tvBudgetFriendly.setTextColor(Color.parseColor("#6fae07"))
 
         }
@@ -185,12 +168,11 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
             }
             newArrivalAdapter.notifyDataSetChanged()
 
-            tvNewArrival.setBackgroundResource(R.drawable.btn_green);
+            tvNewArrival.setBackgroundResource(R.drawable.btn_green)
             tvNewArrival.setTextColor(Color.parseColor("#ffffff"))
-            tvCategories.setBackgroundResource(R.drawable.btn_white);
-
+            tvCategories.setBackgroundResource(R.drawable.btn_white)
             tvCategories.setTextColor(Color.parseColor("#6fae07"))
-            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_white);
+            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_white)
 
             tvBudgetFriendly.setTextColor(Color.parseColor("#6fae07"))
         }
@@ -201,11 +183,11 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
             }
             newArrivalAdapter.notifyDataSetChanged()
 
-            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_green);
+            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_green)
             tvBudgetFriendly.setTextColor(Color.parseColor("#ffffff"))
-            tvNewArrival.setBackgroundResource(R.drawable.btn_white);
+            tvNewArrival.setBackgroundResource(R.drawable.btn_white)
             tvNewArrival.setTextColor(Color.parseColor("#6fae07"))
-            tvCategories.setBackgroundResource(R.drawable.btn_white);
+            tvCategories.setBackgroundResource(R.drawable.btn_white)
             tvCategories.setTextColor(Color.parseColor("#6fae07"))
         }
 
@@ -218,7 +200,9 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
     }
 
     override fun onAddCart(position: Int, it: View?) {
-
+        newArrivalList[position].qty += 1
+        cartList.add(newArrivalList[position])
+        newArrivalAdapter.notifyDataSetChanged()
     }
 
 }
