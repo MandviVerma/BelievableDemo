@@ -11,22 +11,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.tvCategories
-import kotlinx.android.synthetic.main.home_categories.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener {
-    lateinit  var categoryAdapter: HomeCategoryAdapter
+class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
+    CategoryAdapter.OnItemClickListener {
+    lateinit var categoryAdapter: HomeCategoryAdapter
+    lateinit var newArrivalAdapter: CategoryAdapter
+    lateinit var adapters: Adapters
+
+    val newArrivalList = ArrayList<HomeCategoryModel.Data.Category.GroceryDetails>()
+
+
     val categoryList = ArrayList<HomeCategoryModel.Data.Category>()
     lateinit var productsDR: DatabaseReference
     lateinit var ab: ActionBar
@@ -37,8 +39,19 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener {
         getPrducts()
         initView()
         onClick()
+        var list = mutableListOf<Int>()
+        list.add(R.drawable.ic_food1)
+        list.add(R.drawable.ic_food2)
+        list.add(R.drawable.food3)
 
+
+
+        adapters = Adapters(context)
+        adapters.setContentList(list)
+        viewpager.adapter=adapters
         categoryAdapter = HomeCategoryAdapter(context, categoryList, this)
+        newArrivalAdapter = CategoryAdapter(context, newArrivalList, this)
+
         rvHomeCategory.apply {
             adapter = categoryAdapter
             layoutManager = GridLayoutManager(context, 2)
@@ -54,13 +67,60 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener {
             }
 
             override fun onDataChange(snapShot: DataSnapshot) {
-                val homeCategoryModel  = snapShot.getValue(HomeCategoryModel::class.java)
-                categoryList.addAll(homeCategoryModel?.data?.Categories!!)
-                categoryAdapter.notifyDataSetChanged()
+                categoryList.clear()
+                newArrivalList.clear()
+                snapShot.children.forEach {
+                    if (it.key == "Categories") {
+                        it.children.forEach { category ->
+                            val list = ArrayList<HomeCategoryModel.Data.Category.GroceryDetails>()
+                            category.children.forEach { details ->
+                                list.add(
+                                    HomeCategoryModel.Data.Category.GroceryDetails(
+                                        details.child("img").value.toString(),
+                                        details.child("item").value.toString(),
+                                        details.child("price").value.toString()
+                                    )
+                                )
+                            }
+                            categoryList.add(
+                                HomeCategoryModel.Data.Category(
+                                    list,
+                                    category.child("image").value.toString(),
+                                    category.child("name").value.toString()
+                                )
+                            )
+                        }
+                        categoryAdapter.notifyDataSetChanged()
+                    } else if (it.key == "NewArrivals") {
+                        it.children.forEach { details ->
+                            newArrivalList.add(
+                                HomeCategoryModel.Data.Category.GroceryDetails(
+                                    details.child("img").value.toString(),
+                                    details.child("item").value.toString(),
+                                    details.child("price").value.toString()
+                                )
+                            )
+                        }
+                        newArrivalAdapter.notifyDataSetChanged()
+
+                    } else if (it.key == "BudgetFriendly") {
+                        it.children.forEach { details ->
+                            newArrivalList.add(
+                                HomeCategoryModel.Data.Category.GroceryDetails(
+                                    details.child("img").value.toString(),
+                                    details.child("item").value.toString(),
+                                    details.child("price").value.toString()
+                                )
+                            )
+                        }
+                        newArrivalAdapter.notifyDataSetChanged()
+
+                    }
+
+                }
             }
 
         })
-
     }
 
     override fun onCreateView(
@@ -68,7 +128,7 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater!!.inflate(R.layout.fragment_home, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_home, container, false)
 
         return view
     }
@@ -102,36 +162,64 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
         tvCategories.setOnClickListener {
+
+            rvHomeCategory.apply {
+                adapter = categoryAdapter
+                layoutManager = GridLayoutManager(context, 2)
+            }
+            categoryAdapter.notifyDataSetChanged()
+
             tvCategories.setBackgroundResource(R.drawable.btn_green);
             tvCategories.setTextColor(Color.parseColor("#ffffff"))
+            tvNewArrival.setBackgroundResource(R.drawable.btn_white);
             tvNewArrival.setTextColor(Color.parseColor("#6fae07"))
+            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_white);
             tvBudgetFriendly.setTextColor(Color.parseColor("#6fae07"))
 
         }
         tvNewArrival.setOnClickListener {
+
+            rvHomeCategory.apply {
+                adapter = newArrivalAdapter
+                layoutManager = GridLayoutManager(context, 2)
+            }
+            newArrivalAdapter.notifyDataSetChanged()
+
             tvNewArrival.setBackgroundResource(R.drawable.btn_green);
             tvNewArrival.setTextColor(Color.parseColor("#ffffff"))
+            tvCategories.setBackgroundResource(R.drawable.btn_white);
+
             tvCategories.setTextColor(Color.parseColor("#6fae07"))
+            tvBudgetFriendly.setBackgroundResource(R.drawable.btn_white);
+
             tvBudgetFriendly.setTextColor(Color.parseColor("#6fae07"))
         }
         tvBudgetFriendly.setOnClickListener {
+            rvHomeCategory.apply {
+                adapter = newArrivalAdapter
+                layoutManager = GridLayoutManager(context, 2)
+            }
+            newArrivalAdapter.notifyDataSetChanged()
+
             tvBudgetFriendly.setBackgroundResource(R.drawable.btn_green);
             tvBudgetFriendly.setTextColor(Color.parseColor("#ffffff"))
+            tvNewArrival.setBackgroundResource(R.drawable.btn_white);
             tvNewArrival.setTextColor(Color.parseColor("#6fae07"))
+            tvCategories.setBackgroundResource(R.drawable.btn_white);
             tvCategories.setTextColor(Color.parseColor("#6fae07"))
         }
 
     }
 
     override fun onItemClick(position: Int, view: View) {
-        val intent = Intent(
-            context,
-            CategoryActivity::class.java
-        )
-
+        val intent = Intent(context, CategoryActivity::class.java)
+        intent.putParcelableArrayListExtra("Data", categoryList[position].list)
         startActivity(intent)
     }
 
+    override fun onAddCart(position: Int, it: View?) {
+
+    }
 
 }
 

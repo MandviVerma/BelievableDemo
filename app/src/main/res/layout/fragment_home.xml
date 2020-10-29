@@ -31,10 +31,10 @@
         android:searchIcon="@drawable/search"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <ImageView
-        android:id="@+id/slider"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="160dp"
         android:layout_margin="20dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_food2"
@@ -50,7 +50,7 @@
         android:orientation="horizontal"
         android:weightSum="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/slider">
+        app:layout_constraintTop_toBottomOf="@id/viewpager">
 
         <TextView
             android:id="@+id/tvCategories"
