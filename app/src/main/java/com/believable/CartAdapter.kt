@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class CartAdapter(
     private var mContext: Context?,
-    private var categories: ArrayList<HomeCategoryAdapter>,
+    private var categories: ArrayList<HomeCategoryModel.Data.Category.GroceryDetails>,
     private var mListener: OnItemClickListener
 
 
@@ -25,7 +25,7 @@ class CartAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(categories[position].toString())
+        holder.setData(categories[position],position)
 
         holder.itemView.setOnClickListener {
             mListener.onItemClick(position, it)
@@ -39,12 +39,21 @@ class CartAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvItem = itemView.findViewById<TextView>(R.id.tvItem)
         val tvItemAmount = itemView.findViewById<TextView>(R.id.tvItemAmount)
+        val ivItem = itemView.findViewById<ImageView>(R.id.ivItem)
         val ivRemove = itemView.findViewById<ImageView>(R.id.ivRemove)
         val ivAdd = itemView.findViewById<ImageView>(R.id.ivAdd)
-        val ItemAmount = itemView.findViewById<ImageView>(R.id.ItemAmount)
+        val ItemAmount = itemView.findViewById<TextView>(R.id.ItemAmount)
 
 
-        fun setData(category: String) {
+        fun setData(category: HomeCategoryModel.Data.Category.GroceryDetails, position: Int) {
+            tvItem.text = category.item
+            tvItemAmount.text = category.price
+            ItemAmount.text=category.qty.toString()
+            Glide.with(mContext!!)
+                .load(category.img)
+                .centerCrop()
+                .placeholder(android.R.drawable.ic_media_rew)
+                .into(ivItem)
             ivRemove.setOnClickListener {
                 mListener.onRemove(position, it)
             }

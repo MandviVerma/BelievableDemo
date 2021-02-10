@@ -16,11 +16,15 @@ class CategoryActivity : AppCompatActivity(), CategoryAdapter.OnItemClickListene
         supportActionBar?.hide()
         setContentView(R.layout.activity_category)
 
-        name= intent.getStringExtra("CategoryName")?:""
+        name = intent.getStringExtra("CategoryName") ?: ""
         categoryList.addAll(intent.getParcelableArrayListExtra("Data") ?: categoryList)
 
         intRecView()
-        tvItem.text=name
+        tvItem.text = name
+
+        btnViewCart.setOnClickListener {
+            finish()
+        }
 
     }
 
@@ -38,12 +42,23 @@ class CategoryActivity : AppCompatActivity(), CategoryAdapter.OnItemClickListene
             this,
             ItemsOfCategory::class.java
         )
+        intent.putExtra("CategoryName", categoryList[position].item)
+        intent.putExtra("CategoryImage", categoryList[position].img)
+
+
         startActivity(intent)
     }
 
     override fun onAddCart(position: Int, it: View?) {
         categoryList[position].qty += 1
-        CartFragment.cartList.add(categoryList[position])
+        var present = false
+        CartFragment.cartList.forEach {
+            if (it.item == categoryList[position].item) {
+                present = true
+            }
+        }
+        if (!present)
+            CartFragment.cartList.add(categoryList[position])
         categoryAdapter.notifyDataSetChanged()
     }
 

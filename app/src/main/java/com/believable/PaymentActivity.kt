@@ -9,6 +9,7 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
+        supportActionBar?.hide()
         btnCheckOut.setOnClickListener {
             val intent = Intent(
                 this,

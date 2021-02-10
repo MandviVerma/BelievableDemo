@@ -11,16 +11,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/toolbar"
         android:background="@color/colorPrimary">
-        <ImageView
-            android:id="@+id/ivArrow"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+
         <TextView
             android:id="@+id/tvItem"
             android:layout_width="wrap_content"
@@ -276,44 +267,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/tvTotalAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Pay:"
-            android:textColor="#fff"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
-        <TextView
-            android:id="@+id/totalCost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="8dp"
-            android:text="480 Rs"
-            android:textColor="#fff"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tvTotalAmount"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnCheckOut"
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="16dp"
-            android:background="@drawable/btn_white"
+            android:background="@color/colorPrimary"
             android:text="Pay Now"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

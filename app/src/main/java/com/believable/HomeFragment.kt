@@ -49,6 +49,7 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
         newArrivalAdapter = CategoryAdapter(context, newArrivalList, this)
 
         rvHomeCategory.apply {
+            
             adapter = categoryAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
@@ -203,7 +204,15 @@ class HomeFragment : Fragment(), HomeCategoryAdapter.OnItemClickListener,
 
     override fun onAddCart(position: Int, it: View?) {
         newArrivalList[position].qty += 1
-        cartList.add(newArrivalList[position])
+        var present =false
+        cartList.forEach {
+            if(it.item == newArrivalList[position].item){
+                present =true
+            }
+        }
+        if(!present)
+            cartList.add(newArrivalList[position])
+
         newArrivalAdapter.notifyDataSetChanged()
     }
 

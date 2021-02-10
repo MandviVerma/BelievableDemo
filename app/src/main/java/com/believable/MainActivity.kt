@@ -12,8 +12,6 @@ import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : AppCompatActivity() {
-    internal var prevMenuItem: MenuItem? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +40,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
 
     }
 
